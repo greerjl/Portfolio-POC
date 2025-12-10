@@ -22,18 +22,11 @@ data "aws_subnets" "default" {
   }
 }
 
-## Terraform resources for AWS
-
-resource "aws_ecr_repository" "ecr_repo" {
-  name                 = var.ecr_repo_name
-  image_tag_mutability = "IMMUTABLE"
-  tags                 = local.default_tags
-  lifecycle {
-    prevent_destroy = true
-    ignore_changes  = [name]
-  }
+data "aws_ecr_repository" "ecr_repo" {
+  name = var.ecr_repo_name
 }
 
+## Terraform resources for AWS
 resource "aws_iam_role" "iam_role_ecs_task_execution" {
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
