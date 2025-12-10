@@ -1,6 +1,6 @@
-# Implementation-Services-POC
+# Portfolio-POC
 
-Repo for Implementation Services Team Technical Presentation at Datadog. This project demonstrates a CI/CD pipeline that builds and pushes a Docker image to Amazon ECR and deploys infrastructure with Terraform. The GitHub Actions workflow has been configured to use GitHub OIDC to assume an AWS IAM role instead of storing long-lived AWS credentials in repository secrets.
+This project demonstrates a CI/CD pipeline that builds and pushes a Docker image to Amazon ECR and deploys infrastructure with Terraform. The GitHub Actions workflow has been configured to use GitHub OIDC to assume an AWS IAM role instead of storing long-lived AWS credentials in repository secrets.
 
 ## Table of contents
 

@@ -3,7 +3,7 @@
 # Local variables
 locals {
   default_tags = {
-    Project     = "Datadog-Implementation-Services-POC"
+    Project     = "Portfolio-POC"
     Environment = var.env
   }
 }
