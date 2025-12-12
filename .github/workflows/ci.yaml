@@ -156,7 +156,29 @@ jobs:
         with:
           role-to-assume: ${{ env.PROD_ROLE_ARN }}
           aws-region: ${{ env.PROD_AWS_REGION }}
+      
+      - name: Ensure ECR repository exists (prod)
+        env:
+          AWS_REGION: ${{ env.AWS_REGION }}
+          ECR_REPO:   ${{ env.ECR_REPO }}
+        run: |
+          set -euo pipefail
 
+          echo "Checking for ECR repository: $ECR_REPO in $AWS_REGION"
+
+          if aws ecr describe-repositories \
+                --repository-names "$ECR_REPO" \
+                --region "$AWS_REGION" >/dev/null 2>&1; then
+            echo "ECR repository $ECR_REPO already exists"
+          else
+            echo "ECR repository $ECR_REPO does not exist, creating..."
+            aws ecr create-repository \
+              --repository-name "$ECR_REPO" \
+              --region "$AWS_REGION" \
+              --image-scanning-configuration scanOnPush=true \
+              --encryption-configuration encryptionType=AES256
+          fi
+      
       - name: Login (PROD)
         run: |
           aws ecr get-login-password --region "${{ env.PROD_AWS_REGION }}" \
